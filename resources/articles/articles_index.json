@@ -1,10 +1,12 @@
 {
   "Level 5 Leadership: Humility and Fierce Resolve": {
     "content": "level_5_leadership.md",
-    "keywords": "level_5_leadership.yaml"
+    "keywords": "level_5_leadership.yaml",
+    "podcast_url": "https://drive.google.com/uc?export=download&id=1au649lBExtPFXkHzG75sKt-Ngo0kt1dx"
   },
   "Claude Grunitzky: A Serial Entrepreneur's Journey": {
     "content": "serial_entrepreneur_journey.md",
-    "keywords": "serial_entrepreneur_journey.yaml"
+    "keywords": "serial_entrepreneur_journey.yaml",
+    "podcast_url": "https://drive.google.com/file/d/1z__PRjkPozcinKn_WFYzwGr8yJ4OIrLD/view?usp=sharing"
   }
 }

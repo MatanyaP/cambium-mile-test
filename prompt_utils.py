@@ -7,23 +7,14 @@ import yaml
 
 def load_article_contexts(articles_dir):
     """
-    Load article contexts and their keywords from a directory.
-    Each article has two files:
+    Load article contexts, keywords, and podcast URLs from a directory.
+    Each article has:
     - article_name.md: The article content in markdown
     - article_name.yaml: The keywords and their definitions
-
-    Args:
-        articles_dir (str): Path to the directory containing article files
-
-    Returns:
-        dict: Dictionary containing for each article:
-            - 'content': Raw markdown content for the API context
-            - 'html': HTML rendered content for display
-            - 'keywords': List of keywords and their definitions
+    - A podcast URL in the index file
     """
     articles_dir = Path(articles_dir)
 
-    # Load the index file
     try:
         with open(articles_dir / 'articles_index.json', 'r', encoding='utf-8') as f:
             articles_index = json.load(f)
@@ -31,7 +22,6 @@ def load_article_contexts(articles_dir):
         st.error(f"Error loading articles index: {str(e)}")
         return {}
 
-    # Load each article's content and keywords
     article_contexts = {}
     for title, files in articles_index.items():
         try:
@@ -44,9 +34,10 @@ def load_article_contexts(articles_dir):
                 keywords = yaml.safe_load(f)
 
             article_contexts[title] = {
-                'content': content,  # Raw content for API
-                'html': markdown2.markdown(content),  # Rendered HTML for display
-                'keywords': keywords  # Keywords and definitions
+                'content': content,
+                'html': markdown2.markdown(content),
+                'keywords': keywords,
+                'podcast_url': files.get('podcast_url', None)  # Get podcast URL if available
             }
         except Exception as e:
             st.error(f"Error loading article {title}: {str(e)}")
@@ -54,14 +45,22 @@ def load_article_contexts(articles_dir):
 
     return article_contexts
 
+def get_google_drive_embed_url(file_id):
+    """Convert a Google Drive file ID to an embed URL"""
+    return f"https://drive.google.com/file/d/{file_id}/preview"
+
+def extract_file_id(url):
+    """Extract file ID from a Google Drive URL"""
+    if 'id=' in url:
+        return url.split('id=')[1]
+    elif '/d/' in url:
+        return url.split('/d/')[1].split('/')[0]
+    return url
+
 def display_article_and_keywords(article_data):
     """
-    Display the article content and keywords in Streamlit.
-
-    Args:
-        article_data (dict): Dictionary containing article content, HTML, and keywords
+    Display the article content, keywords, and podcast player in Streamlit.
     """
-    # Add some styling
     st.markdown("""
         <style>
             .article-container {
@@ -74,10 +73,30 @@ def display_article_and_keywords(article_data):
                 color: #1f77b4;
                 font-weight: bold;
             }
+            .podcast-section {
+                margin: 20px 0;
+                padding: 15px;
+                background-color: #f1f3f4;
+                border-radius: 5px;
+            }
+            .audio-iframe {
+                border: none;
+                width: 100%;
+                height: 60px;
+                border-radius: 4px;
+            }
         </style>
     """, unsafe_allow_html=True)
 
-    # Create two columns
+    # Display podcast player if URL is available
+    if article_data.get('podcast_url'):
+        with st.expander("📻 Listen to Podcast", expanded=True):
+            file_id = extract_file_id(article_data['podcast_url'])
+            embed_url = get_google_drive_embed_url(file_id)
+            st.markdown(f'<iframe src="{embed_url}" class="audio-iframe"></iframe>',
+                       unsafe_allow_html=True)
+
+    # Create two columns for article and keywords
     col1, col2 = st.columns([2, 1])
 
     # Display article in left column
