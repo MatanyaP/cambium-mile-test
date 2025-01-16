@@ -18,7 +18,7 @@ from utils import (
 from st_utils import get_logger, get_event_loop
 from prompt_utils import load_article_contexts, get_instructions_template, display_article_and_keywords
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", initial_sidebar_state='collapsed')
 
 logger = get_logger(__name__)
 
@@ -647,39 +647,23 @@ def main():
                 if st.button('Start conversation (it may take time...)'):
                     st.session_state.recording = True
 
-            st.markdown("""
-        <style>
-            /* Hide the audio input selector */
-            .element-container:has(select) {
-                display: none;
-            }
 
-            /* Hide the status text */
-            .element-container:has(div.stMarkdown > p:contains("AudioTrack")) {
-                display: none;
-            }
+            # with st.expander("Audio input settings", expanded=False):
+            with st.sidebar:
 
-            /* Make the WebRTC elements more compact */
-            .element-container:has(button) {
-                margin-bottom: 0rem;
-                padding-bottom: 0rem;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-            # WebRTC streamer setup
-            webrtc_ctx = webrtc_streamer(
-                    key = f"recoder",
-                    mode = WebRtcMode.SENDRECV,
-                    rtc_configuration = dict(
-                        iceServers = [
-                            dict(urls = ['stun:stun.l.google.com:19302'])
-                        ]
-                    ),
-                    audio_frame_callback = api_wrapper.audio_frame_callback,
-                    media_stream_constraints = dict(video = False, audio = True),
-                    desired_playing_state = st.session_state.recording,
-                )
+                # WebRTC streamer setup
+                webrtc_ctx = webrtc_streamer(
+                        key = f"recoder",
+                        mode = WebRtcMode.SENDRECV,
+                        rtc_configuration = dict(
+                            iceServers = [
+                                dict(urls = ['stun:stun.l.google.com:19302'])
+                            ]
+                        ),
+                        audio_frame_callback = api_wrapper.audio_frame_callback,
+                        media_stream_constraints = dict(video = False, audio = True),
+                        desired_playing_state = st.session_state.recording,
+                    )
 
             if webrtc_ctx.state.playing:
                 if not api_wrapper.recording:
