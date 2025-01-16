@@ -647,53 +647,39 @@ def main():
                 if st.button('Start conversation (it may take time...)'):
                     st.session_state.recording = True
 
-
             st.markdown("""
-                <style>
-                    /* Hide the audio input selector - multiple attempts */
-                    .MuiBox-root.css-0,
-                    div[class*="MuiBox-root"],
-                    div[class*="css-0"],
-                    select#UNIQUE_ID_OF_SELECT,
-                    .streamlit-expanderContent div[class*="MuiBox"],
-                    div.element-container:has(select),
-                    div:has(> select) {
-                        display: none !important;
-                        visibility: hidden !important;
-                        opacity: 0 !important;
-                        height: 0 !important;
-                        padding: 0 !important;
-                        margin: 0 !important;
-                        overflow: hidden !important;
-                    }
+        <style>
+            /* Hide the audio input selector */
+            .element-container:has(select) {
+                display: none;
+            }
 
-                    /* Hide the status text */
-                    .element-container:has(div.stMarkdown > p:contains("AudioTrack")) {
-                        display: none;
-                    }
+            /* Hide the status text */
+            .element-container:has(div.stMarkdown > p:contains("AudioTrack")) {
+                display: none;
+            }
 
-                    /* Make the WebRTC elements more compact */
-                    .element-container:has(button) {
-                        margin-bottom: 0rem;
-                        padding-bottom: 0rem;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
+            /* Make the WebRTC elements more compact */
+            .element-container:has(button) {
+                margin-bottom: 0rem;
+                padding-bottom: 0rem;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+            # WebRTC streamer setup
             webrtc_ctx = webrtc_streamer(
-                key=f"recorder",
-                mode=WebRtcMode.SENDRECV,
-                rtc_configuration=dict(
-                    iceServers=[
-                        dict(urls=['stun:stun.l.google.com:19302'])
-                    ]
-                ),
-                audio_frame_callback=api_wrapper.audio_frame_callback,
-                media_stream_constraints=dict(
-                    video=False,
-                    audio=True  # Automatically use the default audio input
-                ),
-                desired_playing_state=st.session_state.recording,
-            )
+                    key = f"recoder",
+                    mode = WebRtcMode.SENDRECV,
+                    rtc_configuration = dict(
+                        iceServers = [
+                            dict(urls = ['stun:stun.l.google.com:19302'])
+                        ]
+                    ),
+                    audio_frame_callback = api_wrapper.audio_frame_callback,
+                    media_stream_constraints = dict(video = False, audio = True),
+                    desired_playing_state = st.session_state.recording,
+                )
 
             if webrtc_ctx.state.playing:
                 if not api_wrapper.recording:
