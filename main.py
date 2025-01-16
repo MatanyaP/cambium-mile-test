@@ -505,7 +505,91 @@ def check_password():
         # Password correct
         return True
 
+def set_page_layout():
+    """Set up the page layout with custom styles and logos"""
+
+    st.markdown("""
+        <style>
+            .header-container {
+                display: flex;
+                justify-content: center;
+                padding: 1rem 0;
+                margin-bottom: 2rem;
+            }
+
+            .header-logo {
+                max-width: 200px;
+                height: auto;
+            }
+
+            .footer-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(255, 255, 255, 0.9);
+                display: flex;
+                justify-content: center;
+                padding: 0.5rem 0;  /* Reduced padding */
+                box-shadow: 0 -1px 3px rgba(0,0,0,0.05);  /* Subtler shadow */
+            }
+
+            .footer-logo {
+                max-width: 10px;  /* Smaller logo */
+                height: auto;
+                opacity: 0.7;  /* Slightly transparent */
+            }
+
+            /* Add hover effect */
+            .footer-logo:hover {
+                opacity: 1;
+                transition: opacity 0.3s ease;
+            }
+
+            /* Add padding to main content to prevent overlap with footer */
+            .main-content {
+                padding-bottom: 100px;  /* Reduced padding to match smaller footer */
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+def get_image_base64(image_path):
+    """Convert image to base64 string"""
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    return encoded_string
+
+def display_header():
+    """Display the header with logo"""
+    try:
+        header_image = get_image_base64("images/header_logo.png")
+        st.markdown(f"""
+            <div class="header-container">
+                <img src="data:image/png;base64,{header_image}" class="header-logo" alt="Header Logo">
+            </div>
+        """, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error loading header logo: {str(e)}")
+
+def display_footer():
+    """Display the footer with logo"""
+    try:
+        footer_image = get_image_base64("images/footer_logo.png")
+        st.markdown(f"""
+            <div class="footer-container">
+                <img src="data:image/png;base64,{footer_image}" class="footer-logo" alt="Footer Logo">
+            </div>
+        """, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error loading footer logo: {str(e)}")
+
 def main():
+    # Set up page layout and styles
+    set_page_layout()
+
+    # Display header
+    display_header()
+
     if not check_password():
             st.stop()
     loop = get_event_loop(_logger = logger)
@@ -523,91 +607,112 @@ def main():
         )
     api_wrapper = st.session_state[api_wrapper_key]
 
-    # Add article selector dropdown
+    # Add article selector dropdown with an empty default option
+    article_options = ["Select a Case Study..."] + list(article_contexts.keys())
     selected_article = st.selectbox(
-        'Select an article',
-        options=list(article_contexts.keys()),
+        'Select a Case Stufy',
+        options=article_options,
+        index=0,  # Default to the first option ("Select an article...")
         key='article_selector'
     )
 
-    # Get the selected article data and update instructions
-    selected_article_data = article_contexts.get(selected_article)
-    if selected_article_data:
-        # Display the article
-        display_article_and_keywords(selected_article_data)
+    # Only show content if a valid article is selected
+    if selected_article != "Select a Case Study...":
+        # Get the selected article data and update instructions
+        selected_article_data = article_contexts.get(selected_article)
+        if selected_article_data:
+            # Display the article
+            display_article_and_keywords(selected_article_data)
 
-        # Update the instructions in the API wrapper
-        new_instructions = get_instructions_template(selected_article_data['content'])
-        api_wrapper.update_instructions(new_instructions)
+            # Update the instructions in the API wrapper
+            new_instructions = get_instructions_template(selected_article_data['content'])
+            api_wrapper.update_instructions(new_instructions)
+
+            # Show conversation controls
+            session_timeout = st.slider(
+                'Maximum conversation time (seconds)',
+                min_value=60,
+                max_value=300,
+                value=120
+            )
+            api_wrapper.set_session_timeout(session_timeout)
+
+            # Conversation start/end buttons
+            if 'recording' not in st.session_state:
+                st.session_state.recording = False
+            if st.session_state.recording:
+                if st.button('End conversation', type='primary'):
+                    st.session_state.recording = False
+            else:
+                if st.button('Start conversation (it may take time...)'):
+                    st.session_state.recording = True
 
 
+            st.markdown("""
+                <style>
+                    /* Hide the audio input selector - multiple attempts */
+                    .MuiBox-root.css-0,
+                    div[class*="MuiBox-root"],
+                    div[class*="css-0"],
+                    select#UNIQUE_ID_OF_SELECT,
+                    .streamlit-expanderContent div[class*="MuiBox"],
+                    div.element-container:has(select),
+                    div:has(> select) {
+                        display: none !important;
+                        visibility: hidden !important;
+                        opacity: 0 !important;
+                        height: 0 !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        overflow: hidden !important;
+                    }
 
+                    /* Hide the status text */
+                    .element-container:has(div.stMarkdown > p:contains("AudioTrack")) {
+                        display: none;
+                    }
 
-    # Regenerate when code changes to utilize Streamlit's hot reload
-    api_wrapper_key = f"api_wrapper-{hash_by_code(OpenAIRealtimeAPIWrapper)}"
+                    /* Make the WebRTC elements more compact */
+                    .element-container:has(button) {
+                        margin-bottom: 0rem;
+                        padding-bottom: 0rem;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+            webrtc_ctx = webrtc_streamer(
+                key=f"recorder",
+                mode=WebRtcMode.SENDRECV,
+                rtc_configuration=dict(
+                    iceServers=[
+                        dict(urls=['stun:stun.l.google.com:19302'])
+                    ]
+                ),
+                audio_frame_callback=api_wrapper.audio_frame_callback,
+                media_stream_constraints=dict(
+                    video=False,
+                    audio=True  # Automatically use the default audio input
+                ),
+                desired_playing_state=st.session_state.recording,
+            )
 
-    if api_wrapper_key not in st.session_state:
-        openai_api_key = st.secrets['OPENAI_API_KEY']
+            if webrtc_ctx.state.playing:
+                if not api_wrapper.recording:
+                    st.write('Connecting to OpenAI.')
+                    logger.info('Starting running')
+                    loop.run_until_complete(api_wrapper.run())
+                    logger.info('Finished running')
+                    st.write('Disconnected from OpenAI.')
+                    st.session_state.recording = False
+                    st.rerun()
+            else:
+                if api_wrapper.recording:
+                    logger.info('Stopping running')
+                    api_wrapper.stop()
+                    st.session_state.recording = False
+                    st.rerun()
+                api_wrapper.write_messages()
 
-        initial_context = """
-        Hey, let's begin. Start with a friendly introduction of the idea and purpose,
-        and a brief overview of the case study
-        """
-
-        st.session_state[api_wrapper_key] = OpenAIRealtimeAPIWrapper(
-            api_key=openai_api_key,
-            initial_context=initial_context
-        )
-    api_wrapper = st.session_state[api_wrapper_key]
-
-    session_timeout = st.slider(
-        'Maximum conversation time (seconds)',
-        min_value = 60,
-        max_value = 300,
-        value = 120
-    )
-    api_wrapper.set_session_timeout(session_timeout)
-
-    # webrtc_streamer has its own start button,
-    # but we control it externally because we don't know how to notify api_wrapper
-    if 'recording' not in st.session_state:
-        st.session_state.recording = False
-    if st.session_state.recording:
-        if st.button('End conversation', type = 'primary'):
-            st.session_state.recording = False
-    else:
-        if st.button('Start conversation'):
-            st.session_state.recording = True
-
-    webrtc_ctx = webrtc_streamer(
-        key = f"recoder",
-        mode = WebRtcMode.SENDRECV,
-        rtc_configuration = dict(
-            iceServers = [
-                dict(urls = ['stun:stun.l.google.com:19302'])
-            ]
-        ),
-        audio_frame_callback = api_wrapper.audio_frame_callback,
-        media_stream_constraints = dict(video = False, audio = True),
-        desired_playing_state = st.session_state.recording,
-    )
-
-    if webrtc_ctx.state.playing:
-        if not api_wrapper.recording:
-            st.write('Connecting to OpenAI.')
-            logger.info('Starting running')
-            loop.run_until_complete(api_wrapper.run())
-            logger.info('Finished running')
-            st.write('Disconnected from OpenAI.')
-            st.session_state.recording = False
-            st.rerun()
-    else:
-        if api_wrapper.recording:
-            logger.info('Stopping running')
-            api_wrapper.stop()
-            st.session_state.recording = False
-            st.rerun()
-        api_wrapper.write_messages()
+    display_footer()
 
 
 if __name__ == '__main__':

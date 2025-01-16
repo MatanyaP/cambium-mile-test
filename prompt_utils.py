@@ -101,12 +101,12 @@ def display_article_and_keywords(article_data):
 
     # Display article in left column
     with col1:
-        with st.expander("Article Content", expanded=False):
+        with st.expander("Brief (generated)", expanded=False):
             st.markdown(article_data['html'], unsafe_allow_html=True)
 
     # Display keywords in right column
     with col2:
-        with st.expander("Key Terms", expanded=False):
+        with st.expander("Keywords you should know (generated)", expanded=False):
             for keyword in article_data['keywords']:
                 st.markdown(f"**{keyword['term']}**")
                 st.markdown(keyword['definition'])
