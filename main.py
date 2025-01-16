@@ -645,6 +645,7 @@ def main():
                     st.session_state.recording = False
             else:
                 if st.button('Start conversation (it may take time...)'):
+                    st.info("Wait for it...")
                     st.session_state.recording = True
 
 
