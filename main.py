@@ -584,6 +584,9 @@ def display_footer():
         st.error(f"Error loading footer logo: {str(e)}")
 
 def main():
+    # initialize st.session_state.password if not exists
+    if "password" not in st.session_state:
+        st.session_state["password"] = None
     # Set up page layout and styles
     set_page_layout()
 
@@ -659,7 +662,7 @@ def main():
                         rtc_configuration = dict(
                             iceServers = [
                                 dict(urls = ['stun:stun.l.google.com:19302'])
-                            ]
+                                ]
                         ),
                         audio_frame_callback = api_wrapper.audio_frame_callback,
                         media_stream_constraints = dict(video = False, audio = True),
