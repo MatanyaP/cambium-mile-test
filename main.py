@@ -44,7 +44,7 @@ REALTIME_API_CONFIG = dict(
     ),
     tools = [],
     tool_choice = 'auto',
-    temperature = 0.8,
+    temperature = 0.6,
     max_response_output_tokens = 'inf',
 )
 
