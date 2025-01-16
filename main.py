@@ -649,21 +649,21 @@ def main():
 
 
             # with st.expander("Audio input settings", expanded=False):
-            # with st.sidebar:
+            with st.sidebar:
 
-            # WebRTC streamer setup
-            webrtc_ctx = webrtc_streamer(
-                    key = f"recoder",
-                    mode = WebRtcMode.SENDRECV,
-                    rtc_configuration = dict(
-                        iceServers = [
-                            dict(urls = ['stun:stun.l.google.com:19302'])
-                        ]
-                    ),
-                    audio_frame_callback = api_wrapper.audio_frame_callback,
-                    media_stream_constraints = dict(video = False, audio = True),
-                    desired_playing_state = st.session_state.recording,
-                )
+                # WebRTC streamer setup
+                webrtc_ctx = webrtc_streamer(
+                        key = f"recoder",
+                        mode = WebRtcMode.SENDRECV,
+                        rtc_configuration = dict(
+                            iceServers = [
+                                dict(urls = ['stun:stun.l.google.com:19302'])
+                            ]
+                        ),
+                        audio_frame_callback = api_wrapper.audio_frame_callback,
+                        media_stream_constraints = dict(video = False, audio = True),
+                        desired_playing_state = st.session_state.recording,
+                    )
 
             if webrtc_ctx.state.playing:
                 if not api_wrapper.recording:
