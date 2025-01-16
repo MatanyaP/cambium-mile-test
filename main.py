@@ -608,16 +608,16 @@ def main():
     api_wrapper = st.session_state[api_wrapper_key]
 
     # Add article selector dropdown with an empty default option
-    article_options = ["Select a Case Study..."] + list(article_contexts.keys())
+    article_options = ["Select Case Study..."] + list(article_contexts.keys())
     selected_article = st.selectbox(
-        'Select a Case Stufy',
+        'Select Case Stufy',
         options=article_options,
         index=0,  # Default to the first option ("Select an article...")
         key='article_selector'
     )
 
     # Only show content if a valid article is selected
-    if selected_article != "Select a Case Study...":
+    if selected_article != "Select Case Study...":
         # Get the selected article data and update instructions
         selected_article_data = article_contexts.get(selected_article)
         if selected_article_data:
@@ -649,21 +649,21 @@ def main():
 
 
             # with st.expander("Audio input settings", expanded=False):
-            with st.sidebar:
+            # with st.sidebar:
 
-                # WebRTC streamer setup
-                webrtc_ctx = webrtc_streamer(
-                        key = f"recoder",
-                        mode = WebRtcMode.SENDRECV,
-                        rtc_configuration = dict(
-                            iceServers = [
-                                dict(urls = ['stun:stun.l.google.com:19302'])
-                            ]
-                        ),
-                        audio_frame_callback = api_wrapper.audio_frame_callback,
-                        media_stream_constraints = dict(video = False, audio = True),
-                        desired_playing_state = st.session_state.recording,
-                    )
+            # WebRTC streamer setup
+            webrtc_ctx = webrtc_streamer(
+                    key = f"recoder",
+                    mode = WebRtcMode.SENDRECV,
+                    rtc_configuration = dict(
+                        iceServers = [
+                            dict(urls = ['stun:stun.l.google.com:19302'])
+                        ]
+                    ),
+                    audio_frame_callback = api_wrapper.audio_frame_callback,
+                    media_stream_constraints = dict(video = False, audio = True),
+                    desired_playing_state = st.session_state.recording,
+                )
 
             if webrtc_ctx.state.playing:
                 if not api_wrapper.recording:
