@@ -1,0 +1,12 @@
+[theme]
+# Primary colors
+backgroundColor = "#acbdd5"  # Muted blue-gray - main background
+secondaryBackgroundColor = "#c5d3e6"  # Lighter shade of primary for contrast
+textColor = "#1f2138"  # Dark navy for text
+
+# Font settings
+font = "sans serif"
+
+# Specific element colors
+# These ensure consistent coloring across the app
+headerColor = "#1f2138"  # Dark navy for header elements
