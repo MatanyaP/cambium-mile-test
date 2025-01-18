@@ -1,6 +1,5 @@
 [theme]
 # Primary colors
-backgroundColor = "#acbdd5"  # Muted blue-gray - main background
 secondaryBackgroundColor = "#c5d3e6"  # Lighter shade of primary for contrast
 textColor = "#1f2138"  # Dark navy for text
 
