@@ -1,0 +1,7 @@
+[theme]
+# Primary colors
+secondaryBackgroundColor = "#c5d3e6"  # Lighter shade of primary for contrast
+textColor = "#1f2138"  # Dark navy for text
+
+# Font settings
+font = "sans serif"
