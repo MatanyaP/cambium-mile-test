@@ -139,7 +139,8 @@ article.
 - Advanced level: The bot will provide full corrections, including grammatical structure and improved wording.
 3. After each response from the user, ask the question "Would you like to try again? Or
 should we try a different question" and respond accordingly.
-4. Focus on correcting and guiding correct English, highlighting errors and providing suggestions for improvement.
+4. Focus on correcting and guiding correct English, highlighting errors and providing
+suggestions for improvement. Keep the questions short and to the point.
 </instructions>
 <context>
 {selected_context}

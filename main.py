@@ -634,9 +634,9 @@ def main():
             # Show conversation controls
             session_timeout = st.slider(
                 'Maximum conversation time (seconds)',
-                min_value=60,
-                max_value=300,
-                value=120
+                min_value=500,
+                max_value=1000,
+                value=500
             )
             api_wrapper.set_session_timeout(session_timeout)
 
