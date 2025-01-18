@@ -417,6 +417,7 @@ class OpenAIRealtimeAPIWrapper:
         await asyncio.sleep(
             datetime.timedelta(seconds = self._session_timeout).total_seconds()
         )
+        st.info('Session timeout - stopping the conversation')
         raise TerminateTaskGroup('timer')
 
     async def status_checker(self):
