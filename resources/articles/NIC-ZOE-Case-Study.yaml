@@ -1,30 +1,49 @@
-- term: entrepreneur
-  definition: A person who organizes and operates a business or businesses, taking on greater than normal financial risks in order to do so. **Kent Spellman, the founder of NIC+ZOE, is described as a serial entrepreneur**.
+- term: "entrepreneur"
+  term_he: "יזם"
+  definition: "A person who organizes and operates a business or businesses, taking on greater than normal financial risks in order to do so. **Kent Spellman, the founder of NIC+ZOE, is described as a serial entrepreneur**."
+  definition_he: "אדם המארגן ומפעיל עסק או עסקים, תוך לקיחת סיכונים פיננסיים גדולים מהרגיל כדי לעשות זאת"
 
-- term: private equity (PE)
-  definition: A type of investment in companies that are not publicly traded on a stock exchange, often with the goal of restructuring or growing the company to make a profit. **NIC+ZOE received investments from two private equity firms**.
+- term: "private equity (PE)"
+  term_he: "הון פרטי"
+  definition: "A type of investment in companies that are not publicly traded on a stock exchange, often with the goal of restructuring or growing the company to make a profit. **NIC+ZOE received investments from two private equity firms**."
+  definition_he: "סוג של השקעה בחברות שאינן נסחרות בבורסה, לרוב במטרה לארגן מחדש או להצמיח את החברה כדי להפיק רווח"
 
-- term: merchandiser
-  definition: A person who plans and develops the strategy for how products will be displayed and sold in retail settings, based on sales data and market trends. **Sarah Bind is the Senior Merchandiser at NIC+ZOE**.
+- term: "merchandiser"
+  term_he: "מנהל סחורה"
+  definition: "A person who plans and develops the strategy for how products will be displayed and sold in retail settings, based on sales data and market trends. **Sarah Bind is the Senior Merchandiser at NIC+ZOE**."
+  definition_he: "אדם המתכנן ומפתח את האסטרטגיה להצגת ומכירת מוצרים בחנויות קמעונאיות, בהתבסס על נתוני מכירות ומגמות שוק"
 
-- term: knitwear
-  definition: Clothing or other items made from knitted fabric. **Dorian Lightbown, the creative director of NIC+ZOE, is a knitwear expert**.
+- term: "knitwear"
+  term_he: "סריגים"
+  definition: "Clothing or other items made from knitted fabric. **Dorian Lightbown, the creative director of NIC+ZOE, is a knitwear expert**."
+  definition_he: "בגדים או פריטים אחרים העשויים מבד סרוג"
 
-- term: e-commerce
-  definition: The activity of buying or selling products or services online. **NIC+ZOE is considering moving into e-commerce**.
+- term: "e-commerce"
+  term_he: "מסחר אלקטרוני"
+  definition: "The activity of buying or selling products or services online. **NIC+ZOE is considering moving into e-commerce**."
+  definition_he: "פעילות של קנייה או מכירה של מוצרים או שירותים באופן מקוון"
 
-- term: gross margin
-  definition: A company's revenue minus its cost of goods sold. **E-commerce has a higher gross margin than selling to retailers**.
+- term: "gross margin"
+  term_he: "רווח גולמי"
+  definition: "A company's revenue minus its cost of goods sold. **E-commerce has a higher gross margin than selling to retailers**."
+  definition_he: "ההכנסות של החברה פחות עלות המוצרים שנמכרו"
 
-- term: look book
-  definition: A collection of photographs showcasing a fashion brand’s clothing line for a specific season or style. **NIC+ZOE used a look book to promote its designs**.
+- term: "look book"
+  term_he: "לוק בוק"
+  definition: "A collection of photographs showcasing a fashion brand's clothing line for a specific season or style. **NIC+ZOE used a look book to promote its designs**."
+  definition_he: "אוסף של תצלומים המציג את קו הביגוד של מותג אופנה לעונה או סגנון מסוים"
 
-- term: sourcing
-  definition: The process of finding and procuring the necessary materials or resources to produce goods. **NIC+ZOE directly designs its textiles with its suppliers, unlike many other companies that source fabric off the shelf**.
+- term: "sourcing"
+  term_he: "רכש"
+  definition: "The process of finding and procuring the necessary materials or resources to produce goods. **NIC+ZOE directly designs its textiles with its suppliers, unlike many other companies that source fabric off the shelf**."
+  definition_he: "תהליך איתור והשגת החומרים או המשאבים הנדרשים לייצור מוצרים"
 
-- term: timeline
-  definition: A graphic representation of the passage of time as a line, with significant events or deadlines marked on the line. **NIC+ZOE had a detailed timeline for design and production**.
+- term: "timeline"
+  term_he: "ציר זמן"
+  definition: "A graphic representation of the passage of time as a line, with significant events or deadlines marked on the line. **NIC+ZOE had a detailed timeline for design and production**."
+  definition_he: "ייצוג גרפי של מעבר הזמן כקו, עם סימון אירועים משמעותיים או מועדי יעד על הקו"
 
-- term: culture
-  definition: The shared values, beliefs, and behaviors within an organization or group. **Susie Mulder wants to improve the culture at NIC+ZOE**.
-
+- term: "culture"
+  term_he: "תרבות ארגונית"
+  definition: "The shared values, beliefs, and behaviors within an organization or group. **Susie Mulder wants to improve the culture at NIC+ZOE**."
+  definition_he: "הערכים, האמונות וההתנהגויות המשותפים בתוך ארגון או קבוצה"

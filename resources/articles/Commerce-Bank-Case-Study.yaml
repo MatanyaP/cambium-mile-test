@@ -1,30 +1,50 @@
-- term: cross-sell
-  definition: The practice of selling an additional product or service to an existing customer. For example, a bank might try to cross-sell a customer with a checking account on a savings account or a loan.
+- term: "cross-sell"
+  term_he: "מכירה משולבת"  # Hebrew translation of the term
+  definition: "The practice of selling an additional product or service to an existing customer. For example, a bank might try to cross-sell a customer with a checking account on a savings account or a loan."
+  definition_he: "הפרקטיקה של מכירת מוצר או שירות נוסף ללקוח קיים. לדוגמה, בנק עשוי לנסות למכור ללקוח עם חשבון עו\"ש חשבון חיסכון או הלוואה."
 
-- term: attrition
-  definition: The loss of customers or clients. Retail banks can lose a significant portion of their customer base each year due to dissatisfaction or other factors.
+- term: "attrition"
+  term_he: "שחיקה"  # Hebrew translation of the term
+  definition: "The loss of customers or clients. Retail banks can lose a significant portion of their customer base each year due to dissatisfaction or other factors."
+  definition_he: "איבוד לקוחות או קליינטים. בנקים קמעונאיים עשויים לאבד חלק ניכר ממאגר הלקוחות שלהם כל שנה עקב חוסר שביעות רצון או סיבות אחרות."
 
-- term: core deposits
-  definition: Deposits that are made for reasons other than high interest rates, indicating customer loyalty and a stable funding source for the bank. Commerce Bank prioritized gathering core deposits.
+- term: "core deposits"
+  term_he: "הפקדות עיקריות"  # Hebrew translation of the term
+  definition: "Deposits that are made for reasons other than high interest rates, indicating customer loyalty and a stable funding source for the bank. Commerce Bank prioritized gathering core deposits."
+  definition_he: "הפקדות שנעשו מסיבות שאינן קשורות לריביות גבוהות, מה שמעיד על נאמנות לקוחות ומקור מימון יציב עבור הבנק. בנק קומרס נתן עדיפות לאיסוף הפקדות עיקריות."
 
-- term: retailtainment
-  definition: The concept of adding entertainment to the retail experience to attract and engage customers. Commerce Bank experimented with "retailtainment" such as free hot dogs and live performers to enhance the customer experience.
+- term: "retailtainment"
+  term_he: "קמעונאות בידורית"  # Hebrew translation of the term
+  definition: "The concept of adding entertainment to the retail experience to attract and engage customers. Commerce Bank experimented with 'retailtainment' such as free hot dogs and live performers to enhance the customer experience."
+  definition_he: "הקונספט של הוספת בידור לחוויית הקמעונאות כדי למשוך ולהעסיק את הלקוחות. בנק קומרס ניסה 'קמעונאות בידורית' כמו נקניקיות חינם ומופעים חיים לשיפור חוויית הלקוח."
 
-- term: expense ratio
-  definition: The percentage of a company’s income that is spent on operating expenses. A low expense ratio is not always a positive indicator, as it may indicate underinvestment in the business.
+- term: "expense ratio"
+  term_he: "יחס הוצאות"  # Hebrew translation of the term
+  definition: "The percentage of a company’s income that is spent on operating expenses. A low expense ratio is not always a positive indicator, as it may indicate underinvestment in the business."
+  definition_he: "אחוז מההכנסות של החברה שמוצא על הוצאות תפעוליות. יחס הוצאות נמוך לא תמיד מצביע על אינדיקטור חיובי, כי הוא עשוי להצביע על חוסר השקעה בעסק."
 
-- term: non-interest income
-  definition: Revenue earned from fees charged to customers for services or transactions, rather than from interest on loans. This type of income had been growing rapidly in the banking industry.
+- term: "non-interest income"
+  term_he: "הכנסה ללא ריבית"  # Hebrew translation of the term
+  definition: "Revenue earned from fees charged to customers for services or transactions, rather than from interest on loans. This type of income had been growing rapidly in the banking industry."
+  definition_he: "הכנסות המתקבלות מדמי שירות או עמלות שמגייסים מלקוחות, ולא מריבית על הלוואות. סוג זה של הכנסה הלך ותפח בתעשיית הבנקים."
 
-- term: mystery shopping
-  definition: The practice of using anonymous evaluators to assess the quality of service at a business. Commerce Bank used mystery shoppers to evaluate the service provided at their branches.
+- term: "mystery shopping"
+  term_he: "קניות מסתוריות"  # Hebrew translation of the term
+  definition: "The practice of using anonymous evaluators to assess the quality of service at a business. Commerce Bank used mystery shoppers to evaluate the service provided at their branches."
+  definition_he: "הפרקטיקה של שימוש במעריכים אנונימיים לצורך הערכת איכות השירות בעסק. בנק קומרס השתמש בקונים מסתוריים להערכת השירות הניתן בסניפים שלהם."
 
-- term: loan-to-deposit ratio
-  definition: The proportion of a bank's loans compared to its deposits. Commerce Bank maintained a lower loan-to-deposit ratio than the industry average.
+- term: "loan-to-deposit ratio"
+  term_he: "יחס הלוואה להפקדה"  # Hebrew translation of the term
+  definition: "The proportion of a bank's loans compared to its deposits. Commerce Bank maintained a lower loan-to-deposit ratio than the industry average."
+  definition_he: "היחס בין הלוואות הבנק להפקדותיו. בנק קומרס שמר על יחס הלוואה להפקדה נמוך יותר מהממוצע בתעשייה."
 
-- term: "WOW!ing"
-  definition: A term used by Commerce Bank to describe their approach to providing exceptional customer service. This involved exceeding customer expectations and creating a positive experience.
+- term: "'WOW!ing'"
+  term_he: "אפקט WOW!"  # Hebrew translation of the term
+  definition: "A term used by Commerce Bank to describe their approach to providing exceptional customer service. This involved exceeding customer expectations and creating a positive experience."
+  definition_he: "מונח שבו השתמש בנק קומרס כדי לתאר את הגישה שלהם לספק שירות לקוחות יוצא דופן. זה כלל מעבר לציפיות הלקוח ויצירת חוויית לקוח חיובית."
 
-- term: franchise
-  definition: In this context, a business model in which multiple locations or "stores" operate under a common brand, providing a consistent experience to customers. Commerce Bank aimed to create a retail franchise with its branches.
+- term: "franchise"
+  term_he: "זיכיון"  # Hebrew translation of the term
+  definition: "In this context, a business model in which multiple locations or 'stores' operate under a common brand, providing a consistent experience to customers. Commerce Bank aimed to create a retail franchise with its branches."
+  definition_he: "במודל עסקי זה, מספר סניפים או 'חנויות' פועלות תחת מותג משותף, ומספקות חוויה אחידה ללקוחות. בנק קומרס שאף ליצור זיכיון קמעונאי עם סניפיו."
 
