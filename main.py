@@ -632,14 +632,14 @@ def main():
             new_instructions = get_instructions_template(selected_article_data['content'])
             api_wrapper.update_instructions(new_instructions)
 
-            # Show conversation controls
-            session_timeout = st.slider(
-                'Maximum conversation time (seconds)',
-                min_value=500,
-                max_value=1000,
-                value=500
-            )
-            api_wrapper.set_session_timeout(session_timeout)
+            # # Show conversation controls
+            # session_timeout = st.slider(
+            #     'Maximum conversation time (seconds)',
+            #     min_value=500,
+            #     max_value=1000,
+            #     value=500
+            # )
+            # api_wrapper.set_session_timeout(session_timeout)
 
             # Conversation start/end buttons
             if 'recording' not in st.session_state:
@@ -647,45 +647,45 @@ def main():
             if st.session_state.recording:
                 if st.button('End conversation', type='primary'):
                     st.session_state.recording = False
-            else:
-                if st.button('Start conversation (it may take time...)'):
-                    st.info("Wait for it...")
-                    st.session_state.recording = True
+            # else:
+            #     if st.button('Start conversation (it may take time...)'):
+            #         st.info("Wait for it...")
+            #         st.session_state.recording = True
 
 
             # with st.expander("Audio input settings", expanded=False):
-            with st.sidebar:
-
-                # WebRTC streamer setup
-                webrtc_ctx = webrtc_streamer(
-                        key = f"recoder",
-                        mode = WebRtcMode.SENDRECV,
-                        rtc_configuration = dict(
-                            iceServers = [
-                                dict(urls = ['stun:stun.l.google.com:19302'])
-                                ]
-                        ),
-                        audio_frame_callback = api_wrapper.audio_frame_callback,
-                        media_stream_constraints = dict(video = False, audio = True),
-                        desired_playing_state = st.session_state.recording,
-                    )
-
-            if webrtc_ctx.state.playing:
-                if not api_wrapper.recording:
-                    st.write('Connecting to OpenAI.')
-                    logger.info('Starting running')
-                    loop.run_until_complete(api_wrapper.run())
-                    logger.info('Finished running')
-                    st.write('Disconnected from OpenAI.')
-                    st.session_state.recording = False
-                    st.rerun()
-            else:
-                if api_wrapper.recording:
-                    logger.info('Stopping running')
-                    api_wrapper.stop()
-                    st.session_state.recording = False
-                    st.rerun()
-                api_wrapper.write_messages()
+            # with st.sidebar:
+            #
+            #     # WebRTC streamer setup
+            #     webrtc_ctx = webrtc_streamer(
+            #             key = f"recoder",
+            #             mode = WebRtcMode.SENDRECV,
+            #             rtc_configuration = dict(
+            #                 iceServers = [
+            #                     dict(urls = ['stun:stun.l.google.com:19302'])
+            #                     ]
+            #             ),
+            #             audio_frame_callback = api_wrapper.audio_frame_callback,
+            #             media_stream_constraints = dict(video = False, audio = True),
+            #             desired_playing_state = st.session_state.recording,
+            #         )
+            #
+            # if webrtc_ctx.state.playing:
+            #     if not api_wrapper.recording:
+            #         st.write('Connecting to OpenAI.')
+            #         logger.info('Starting running')
+            #         loop.run_until_complete(api_wrapper.run())
+            #         logger.info('Finished running')
+            #         st.write('Disconnected from OpenAI.')
+            #         st.session_state.recording = False
+            #         st.rerun()
+            # else:
+            #     if api_wrapper.recording:
+            #         logger.info('Stopping running')
+            #         api_wrapper.stop()
+            #         st.session_state.recording = False
+            #         st.rerun()
+            #     api_wrapper.write_messages()
 
     display_footer()
 
