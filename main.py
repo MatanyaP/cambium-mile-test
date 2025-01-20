@@ -687,6 +687,7 @@ def main():
             #         st.rerun()
             #     api_wrapper.write_messages()
 
+    # show footer
     display_footer()
 
 
