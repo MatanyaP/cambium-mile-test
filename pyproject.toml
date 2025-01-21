@@ -12,6 +12,8 @@ dependencies = [
     "numpy~=2.1",
     "av~=12.3",
     "markdown2",
-    "pyyaml"
+    "pyyaml",
+    "fastapi",
+    "uvicorn"
   
 ]
