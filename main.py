@@ -1,9 +1,15 @@
 # main.py
 import json
+import base64
 import logging
 import streamlit as st
 from prompt_utils import load_article_contexts, get_instructions_template, display_article_and_keywords
 from st_utils import get_logger
+
+st.set_page_config(
+    page_title="Cambium Mile",
+    layout="wide",
+)
 
 # Configure logger
 logger = get_logger(__name__)
@@ -24,21 +30,103 @@ def password_entered():
         st.session_state["password_correct"] = False
 
 def set_page_layout():
-    """Set up the page layout with custom styles"""
+    """Set up the page layout with custom styles and logos"""
+
     st.markdown("""
         <style>
-            .chat-container {
-                margin: 20px 0;
-                padding: 20px;
-                border-radius: 10px;
-                background-color: #f8f9fa;
+            .header-container {
+                display: flex;
+                justify-content: center;
+                padding: 1rem 0;
+                margin-bottom: 2rem;
             }
-            .webrtc-container {
-                margin: 20px 0;
-                text-align: center;
+
+            .header-logo {
+                max-width: 200px;
+                height: auto;
+            }
+
+            .footer-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: rgba(255, 255, 255, 0.9);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.3rem 0;
+                box-shadow: 0 -1px 3px rgba(0,0,0,0.05);
+                z-index: 1000;
+            }
+
+            .footer-logo {
+                width: 100px !important;
+                height: auto !important;
+                opacity: 0.7;
+                max-width: none;
+            }
+
+            /* Add hover effect */
+            .footer-logo:hover {
+                opacity: 1;
+                transition: opacity 0.3s ease;
+            }
+
+            /* Add padding to main content to prevent overlap with footer */
+            .main-content {
+                padding-bottom: 100px;
             }
         </style>
     """, unsafe_allow_html=True)
+# def set_page_layout():
+#     """Set up the page layout with custom styles and logos"""
+#
+#     st.markdown("""
+#         <style>
+#             .header-container {
+#                 display: flex;
+#                 justify-content: center;
+#                 padding: 1rem 0;
+#                 margin-bottom: 2rem;
+#             }
+#
+#             .header-logo {
+#                 max-width: 200px;
+#                 height: auto;
+#             }
+#
+#             .footer-container {
+#                 position: fixed;
+#                 bottom: 0;
+#                 left: 0;
+#                 right: 0;
+#                 background-color: rgba(255, 255, 255, 0.9);
+#                 display: flex;
+#                 justify-content: center;
+#                 padding: 0.5rem 0;  /* Reduced padding */
+#                 box-shadow: 0 -1px 3px rgba(0,0,0,0.05);  /* Subtler shadow */
+#             }
+#
+#             .footer-logo {
+#                 max-width: 10px;  /* Smaller logo */
+#                 height: auto;
+#                 opacity: 0.7;  /* Slightly transparent */
+#             }
+#
+#             /* Add hover effect */
+#             .footer-logo:hover {
+#                 opacity: 1;
+#                 transition: opacity 0.3s ease;
+#             }
+#
+#             /* Add padding to main content to prevent overlap with footer */
+#             .main-content {
+#                 padding-bottom: 100px;  /* Reduced padding to match smaller footer */
+#             }
+#         </style>
+#     """, unsafe_allow_html=True)
+
 
 def get_js_code():
     """Return the JavaScript code as a string"""
@@ -347,69 +435,170 @@ def get_webrtc_html(article_data):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Voice Chat</title>
         <style>
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
+            :root {
+                --primary-color: #2563eb;
+                --primary-hover: #1d4ed8;
+                --bg-light: #f8fafc;
+                --border-color: #e2e8f0;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             }
+
+            .container {
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 12px;
+                font-family: system-ui, -apple-system, sans-serif;
+                color: var(--text-primary);
+            }
+
             .controls {
                 text-align: center;
-                margin: 20px 0;
+                margin: 24px 0;
+                display: flex;
+                gap: 12px;
+                justify-content: center;
             }
+
             .chat-container {
-                margin: 20px 0;
-                padding: 15px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
+                margin: 24px 0;
+                padding: 20px;
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
                 min-height: 300px;
-                max-height: 500px;
+                max-height: 600px;
                 overflow-y: auto;
+                background-color: var(--bg-light);
+                box-shadow: var(--shadow-sm);
             }
+
             .message {
-                margin: 10px 0;
-                padding: 10px;
-                border-radius: 8px;
-                max-width: 80%;
+                margin: 16px 0;
+                padding: 12px 16px;
+                border-radius: 12px;
+                max-width: 85%;
+                box-shadow: var(--shadow-sm);
+                line-height: 1.5;
+                position: relative;
+                animation: fadeIn 0.3s ease-in-out;
             }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
             .user-message {
-                background-color: #e3f2fd;
+                background-color: var(--primary-color);
+                color: white;
                 margin-left: auto;
-                margin-right: 20px;
+                margin-right: 16px;
             }
+
             .bot-message {
-                background-color: #f5f5f5;
-                margin-left: 20px;
+                background-color: white;
+                margin-left: 16px;
                 margin-right: auto;
+                border: 1px solid var(--border-color);
             }
+
             .message-label {
-                font-size: 0.8em;
-                color: #666;
+                font-size: 0.75rem;
+                color: var(--text-secondary);
                 margin-bottom: 4px;
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
             }
+
+            .user-message .message-label {
+                color: rgba(255, 255, 255, 0.9);
+            }
+
             .status {
                 text-align: center;
-                margin: 10px 0;
-                font-style: italic;
+                margin: 12px 0;
+                padding: 8px;
+                color: var(--text-secondary);
+                font-size: 0.875rem;
+                border-radius: 8px;
+                background-color: var(--bg-light);
             }
+
             .error {
-                color: red;
+                color: #dc2626;
                 display: none;
-                margin: 10px 0;
+                margin: 12px 0;
+                padding: 12px;
+                border-radius: 8px;
+                background-color: #fef2f2;
+                border: 1px solid #fee2e2;
+                font-size: 0.875rem;
             }
+
             button {
-                padding: 10px 20px;
-                margin: 0 10px;
-                border-radius: 5px;
+                padding: 12px 24px;
+                border-radius: 8px;
                 border: none;
-                background-color: #0066cc;
+                background-color: var(--primary-color);
                 color: white;
                 cursor: pointer;
+                font-weight: 500;
+                font-size: 0.875rem;
+                transition: all 0.2s ease;
+                min-width: 140px;
             }
+
+            button:hover:not(:disabled) {
+                background-color: var(--primary-hover);
+                transform: translateY(-1px);
+                box-shadow: var(--shadow-md);
+            }
+
             button:disabled {
-                background-color: #cccccc;
+                background-color: var(--text-secondary);
                 cursor: not-allowed;
+                opacity: 0.7;
+            }
+
+            /* Custom scrollbar for modern browsers */
+            .chat-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .chat-container::-webkit-scrollbar-track {
+                background: var(--bg-light);
+                border-radius: 4px;
+            }
+
+            .chat-container::-webkit-scrollbar-thumb {
+                background: var(--text-secondary);
+                border-radius: 4px;
+            }
+
+            .chat-container::-webkit-scrollbar-thumb:hover {
+                background: var(--text-primary);
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 640px) {
+                .container {
+                    padding: 16px;
+                }
+
+                .message {
+                    max-width: 90%;
+                }
+
+                button {
+                    padding: 10px 20px;
+                    min-width: 120px;
+                }
             }
         </style>
+
     </head>
     <body>
         <div class="container">
@@ -430,11 +619,43 @@ def get_webrtc_html(article_data):
 
     return html_template.replace('JAVASCRIPT_CODE_PLACEHOLDER', js_code)
 
+def get_image_base64(image_path):
+    """Convert image to base64 string"""
+    with open(image_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+    return encoded_string
+
+def display_header():
+    """Display the header with logo"""
+    try:
+        header_image = get_image_base64("images/header_logo.png")
+        st.markdown(f"""
+            <div class="header-container">
+                <img src="data:image/png;base64,{header_image}" class="header-logo" alt="Header Logo">
+            </div>
+        """, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error loading header logo: {str(e)}")
+
+def display_footer():
+    """Display the footer with logo"""
+    try:
+        footer_image = get_image_base64("images/footer_logo.png")
+        st.markdown(f"""
+            <div class="footer-container">
+                <img src="data:image/png;base64,{footer_image}" class="footer-logo" alt="Footer Logo">
+            </div>
+        """, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error loading footer logo: {str(e)}")
+
 def main():
+
     if not check_password():
         st.stop()
 
     set_page_layout()
+    display_header()
 
     # Load article contexts
     article_contexts = load_article_contexts('resources/articles')
@@ -461,5 +682,8 @@ def main():
                     height=600
                 )
 
+    display_footer()
+
 if __name__ == '__main__':
     main()
+
